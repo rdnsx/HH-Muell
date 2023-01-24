@@ -5,8 +5,8 @@ import telegram
 import re
 
 # Telegram bot setup
-bot = telegram.Bot(token='5732691544:AAEhkYvjp_EhHveVDbNAGMW03QhhpnGwwBs')
-chat_id = '-886886289'
+bot = telegram.Bot(token='YOUR_API_TOKEN')
+chat_id = 'YOUR_CHAT_ID'
 
 async def main():
     # Get the page
