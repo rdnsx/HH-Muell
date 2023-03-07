@@ -1,4 +1,4 @@
-# muell
+# Muell notification with Telegram
 Scrapes the household related "Abholkalender" from "Stadtreinigung Hamburg" and sends a telegram message with all needed informations for the following "Abholung".
 
 This is a Python script that scrapes a webpage and sends a message containing the scraped data to a Telegram chat using a bot API token and chat ID. Here's a brief overview of what the script does:
