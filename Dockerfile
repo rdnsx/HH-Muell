@@ -1,10 +1,6 @@
-FROM python:3.9
-
+FROM python:3.9-slim-buster
 WORKDIR /app
-
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY muell.py .
-
-CMD ["python", "muell.py"]
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD [ "python", "muell.py" ]
