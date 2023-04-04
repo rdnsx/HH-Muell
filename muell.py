@@ -3,6 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 import telegram
 import re
+from datetime import datetime, timedelta
 
 # Telegram bot setup
 bot = telegram.Bot(token='YOUR_API_TOKEN')
@@ -10,7 +11,7 @@ chat_id = 'YOUR_CHAT_ID'
 
 async def main():
     # Get the page
-    url = 'https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=820&tx_srh_pickups%5Bhousenumber%5D=131129&tx_srh_pickups%5BisAllowedOwner%5D=1#c3376'
+    url = 'STADTREINIGUNG_URL'
     page = requests.get(url)
 
     # Parse the page with BeautifulSoup
@@ -26,6 +27,9 @@ async def main():
         cols = row.find_all('td')
         cols = [col.text.strip() for col in cols]
         data.append(cols)
+    
+    print(data)
+    print(len(data))
 
     # Replacing certain patterns with newlines
     row_2 = data[1]
@@ -40,12 +44,20 @@ async def main():
     # Replacing last comma with period
     if message[-1] == ',':
         message = message[:-1] + '.'
-    # Sending the message
-    message = await bot.send_message(chat_id=chat_id, text=message)
-    if message:
-        print("message sent successfully")
-    else:
-        print("message sending failed")
+        
+    print(f"message: {message}")
 
+    # Sending the message
+    tomorrow = datetime.now() + timedelta(days=1)
+    date_str = tomorrow.strftime('%d. %B %Y')
+    if date_str in message:
+        message = await bot.send_message(chat_id=chat_id, text=message)
+        if message:
+            print("message sent successfully")
+        else:
+            print("message sending failed")
+    else:
+        print(f"Date '{date_str}' not found in message. Message not sent.")
+    
 if __name__ == '__main__':
     asyncio.run(main())
