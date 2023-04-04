@@ -1,4 +1,4 @@
-# Muell notification with Telegram
+# HH-Muell notification with Telegram
 Scrapes the household related "Abholkalender" from "Stadtreinigung Hamburg" and sends a telegram message with all needed informations for the following "Abholung" the day before.
 
 ### You have to change the STADTREINIGUNG_URL, YOUR_API_TOKEN token and YOUR_CHAT_ID.
