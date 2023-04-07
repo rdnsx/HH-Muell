@@ -21,4 +21,4 @@ Replace the YOUR_API_TOKEN and YOUR_CHAT_ID placeholders in the script with your
 
 Replace the STADTREINIGUNG_URL placeholder with the URL of the webpage that you want to scrape.
 
-### YOU HAVE TO change YOUR_API_TOKEN token, YOUR_CHAT_ID and your Personal STADTREINIGUNG_URL (e.g. https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=4097&tx_srh_pickups%5Bhousenumber%5D=213997&tx_srh_pickups%5BisAllowedOwner%5D=1#c3376).
+e.g. https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=4097&tx_srh_pickups%5Bhousenumber%5D=213997&tx_srh_pickups%5BisAllowedOwner%5D=1#c3376
