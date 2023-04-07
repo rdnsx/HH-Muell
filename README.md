@@ -1,6 +1,6 @@
 # HH-Muell notification with Telegram
 Scrapes the household related "Abholkalender" from "Stadtreinigung Hamburg" and sends a telegram message with all needed informations for the following "Abholung" the day before.
-Screenshot_2023-04-07-21-30-53-550-edit_com.miui.gallery.jpg
+https://github.com/rdnsx/HH-Muell/blob/c803269822d14c1d6570c1df35d7b3e5db503a02/Screenshot_2023-04-07-21-30-53-550-edit_com.miui.gallery.jpg
 
 This code retrieves information from the website, processes it, and sends a message via Telegram if certain conditions are met. Here is a brief overview of what the code does:
 
