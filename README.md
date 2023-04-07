@@ -14,6 +14,7 @@ Create a Telegram bot by talking to the BotFather. Follow the instructions provi
 Get your chat ID by sending a message to your bot and then using the following URL in your web browser:
 
 https://api.telegram.org/bot<YOUR_API_TOKEN>/getUpdates
+
 Replace <YOUR_API_TOKEN> with your actual API token. This URL will return a JSON response that contains information about your bot's recent messages. Look for the chat object that corresponds to the chat where you sent the message. The id field of the chat object is your chat ID.
 
 Replace the YOUR_API_TOKEN and YOUR_CHAT_ID placeholders in the script with your actual API token and chat ID.
