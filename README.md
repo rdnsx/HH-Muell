@@ -22,3 +22,8 @@ Replace the YOUR_API_TOKEN and YOUR_CHAT_ID placeholders in the script with your
 Replace the STADTREINIGUNG_URL placeholder with your Individual URL from the Stadtreinigung.
 
 e.g. https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=4097&tx_srh_pickups%5Bhousenumber%5D=213997&tx_srh_pickups%5BisAllowedOwner%5D=1#c3376
+
+### If you'd build and run it as a docker container you can also include environment variables in the Docker run command:
+
+docker run -it --rm -e API_TOKEN=your_api_token -e CHAT_ID=your_chat_id -e STADTREINIGUNG_URL=your_stadtreinigung_url <image-name>
+
