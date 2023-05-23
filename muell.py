@@ -10,8 +10,8 @@ import locale
 locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
 
 # Telegram bot setup
-bot = telegram.Bot(token='5732691544:AAEhkYvjp_EhHveVDbNAGMW03QhhpnGwwBs')
-chat_id = '-886886289'
+bot = telegram.Bot(token='YOUR_BOT_TOKEN')
+chat_id = 'YOUR_CHAT_ID'
 
 async def main():
     # Get the page
