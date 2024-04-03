@@ -5,6 +5,7 @@ import telegram
 import re
 from datetime import datetime, timedelta
 import locale
+import os
 
 # Set German locale
 locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
