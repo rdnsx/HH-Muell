@@ -16,7 +16,7 @@ chat_id = os.getenv('YOUR_CHAT_ID')
 
 async def main():
     # Get the page
-    url = 'https://www.stadtreinigung.hamburg/abfuhrkalender/?tx_srh_pickups%5Bstreet%5D=820&tx_srh_pickups%5Bhousenumber%5D=131129&tx_srh_pickups%5BisAllowedOwner%5D=1#c3376'
+    url = os.getenv('URL_STADTREINIGUNG')
     page = requests.get(url)
 
     # Parse the page with BeautifulSoup
