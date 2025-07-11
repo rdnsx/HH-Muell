@@ -8,7 +8,63 @@ import locale
 import os
 
 # Set German locale
-locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
+try:
+    locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
+except locale.Error:
+    try:
+        locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+    except locale.Error:
+        print("Warning: Could not set German locale. Using manual month mapping.")
+
+# German month names mapping to ensure consistency
+GERMAN_MONTHS = {
+    1: 'Januar',
+    2: 'Februar', 
+    3: 'März',
+    4: 'April',
+    5: 'Mai',
+    6: 'Juni',
+    7: 'Juli',
+    8: 'August',
+    9: 'September',
+    10: 'Oktober',
+    11: 'November',
+    12: 'Dezember'
+}
+
+# English month names mapping (for website compatibility)
+ENGLISH_MONTHS = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+}
+
+def format_german_date(date_obj):
+    """Format date with German month names"""
+    day = date_obj.day
+    month = GERMAN_MONTHS[date_obj.month]
+    year = date_obj.year
+    return f"{day}. {month} {year}"
+
+def format_english_date(date_obj):
+    """Format date with English month names"""
+    day = date_obj.day
+    month = ENGLISH_MONTHS[date_obj.month]
+    year = date_obj.year
+    return f"{day}. {month} {year}"
+
+def get_date_variants(date_obj):
+    """Get both German and English date formats for checking"""
+    return [format_german_date(date_obj), format_english_date(date_obj)]
 
 # Telegram bot setup
 token = os.getenv('YOUR_BOT_TOKEN')
@@ -69,11 +125,20 @@ async def main():
 
         # Sending the message
         tomorrow = datetime.now() + timedelta(days=1)
-        date_str = tomorrow.strftime('%d. %B %Y')
-        print(f"Checking if tomorrow's date ({date_str}) is in the message")
+        date_variants = get_date_variants(tomorrow)
+        print(f"Checking if tomorrow's date is in the message. Variants: {date_variants}")
         
-        if date_str in message:
-            print("Date found in message. Sending Telegram notification...")
+        # Check if any of the date variants (German or English) are in the message
+        date_found = False
+        found_date = None
+        for date_str in date_variants:
+            if date_str in message:
+                date_found = True
+                found_date = date_str
+                break
+        
+        if date_found:
+            print(f"Date found in message: '{found_date}'. Sending Telegram notification...")
             try:
                 sent_message = await bot.send_message(chat_id=chat_id, text=message)
                 if sent_message:
@@ -84,7 +149,7 @@ async def main():
                 print(f"Error sending Telegram message: {e}")
                 raise
         else:
-            print(f"Date '{date_str}' not found in message. Message not sent.")
+            print(f"None of the date variants {date_variants} found in message. Message not sent.")
     
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data from URL: {e}")
