@@ -109,32 +109,46 @@ async def main():
             cols = [col.text.strip() for col in cols]
             data.append(cols)
 
-        # Replacing certain patterns with newlines
-        row_2 = data[1]
-        row_2 = [re.sub(r'(.*\d{1,2}\.\s+[A-Za-z]{3}\s+\d{4})', r'\1\n', col) for col in row_2]
-        row_2 = [re.sub(r'(alle \d{1,2}\s+[A-Za-z]+)', r'\1\n', col) for col in row_2]
-        row_2 = [re.sub(r'alle 4 Wochen', ',', col) for col in row_2]
-        row_2 = [re.sub(r'14-täglich', ',', col) for col in row_2]
-        row_2 = [re.sub(r'1 x wöchentlich', ',', col) for col in row_2]
-        message = ' '.join(row_2)
-        message = re.sub(r'\s+', ' ', message)  # Removing extra spaces
-        message = re.sub(r'(\d{4})', r'\1\n\n', message)  # insert new line after year
-        # Replacing last comma with period
-        if message[-1] == ',':
-            message = message[:-1] + '.'
-
-        # Sending the message
+        # Check for tomorrow's date
         tomorrow = datetime.now() + timedelta(days=1)
         date_variants = get_date_variants(tomorrow)
-        print(f"Checking if tomorrow's date is in the message. Variants: {date_variants}")
+        print(f"Looking for tomorrow's date in table. Variants: {date_variants}")
         
-        # Check if any of the date variants (German or English) are in the message
+        # Search through all rows to find tomorrow's date
         date_found = False
         found_date = None
-        for date_str in date_variants:
-            if date_str in message:
-                date_found = True
-                found_date = date_str
+        message = None
+        
+        for i, row_data in enumerate(data):
+            if not row_data or len(row_data) == 0:
+                continue
+                
+            # Join the row to check if tomorrow's date is in it
+            row_text = ' '.join(row_data)
+            
+            # Check if any date variant is in this row
+            for date_str in date_variants:
+                if date_str in row_text:
+                    print(f"Found tomorrow's date in row {i}: {row_data}")
+                    date_found = True
+                    found_date = date_str
+                    
+                    # Process this row to create the message
+                    row_processed = row_data.copy()
+                    row_processed = [re.sub(r'(.*\d{1,2}\.\s+[A-Za-z]+\s+\d{4})', r'\1\n', col) for col in row_processed]
+                    row_processed = [re.sub(r'(alle \d{1,2}\s+[A-Za-z]+)', r'\1\n', col) for col in row_processed]
+                    row_processed = [re.sub(r'alle 4 Wochen', ',', col) for col in row_processed]
+                    row_processed = [re.sub(r'14-täglich', ',', col) for col in row_processed]
+                    row_processed = [re.sub(r'1 x wöchentlich', ',', col) for col in row_processed]
+                    message = ' '.join(row_processed)
+                    message = re.sub(r'\s+', ' ', message)  # Removing extra spaces
+                    message = re.sub(r'(\d{4})', r'\1\n\n', message)  # insert new line after year
+                    # Replacing last comma with period
+                    if message and message[-1] == ',':
+                        message = message[:-1] + '.'
+                    break
+            
+            if date_found:
                 break
         
         if date_found:
