@@ -154,7 +154,7 @@ async def main():
         if date_found:
             print(f"Date found in message: '{found_date}'. Sending Telegram notification...")
             try:
-                sent_message = await bot.send_message(chat_id=chat_id, text=message)
+                sent_message = bot.send_message(chat_id=chat_id, text=message)
                 if sent_message:
                     print("Message sent successfully.")
                 else:
